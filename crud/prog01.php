@@ -1,5 +1,4 @@
 
-
 <!DOCTYPE html>
 <html lang = "en">
 <head>
@@ -9,6 +8,7 @@
 </head>
 
 <body style="padding:50px;">
+  <a href="https://github.com/mjfulle4/cis355">My Github</a><br />
   <h1>Customers</h1><br/>
 </body>
 
