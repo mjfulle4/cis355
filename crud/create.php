@@ -2,6 +2,7 @@
 
 <?php 
   session_start();
+  if(empty ($_SESSION['name'])) header ("Location: login.php");
 	
   // check user input before entry into database
   require 'database.php';
@@ -11,11 +12,14 @@
 	$nameError = null;
 	$emailError = null;
 	$mobileError = null;
+	$passwordError = null;
 		
 	// populate data variables with text field data
 	$name = $_POST['name'];
 	$email = $_POST['email'];
 	$mobile = $_POST['mobile'];
+	$password = $_POST['password'];
+	$password = MD5($password);	
 		
 	// check for blank name
 	$valid = true;
@@ -33,14 +37,20 @@
 	  $mobileError = 'Please enter a mobile phone number';
 	  $valid = false;
 	}
+	// check for blank password	
+	if (empty($password)) {
+	  $passwordError = 'Please enter a password';
+	  $valid = false;
+	}
+	
 		
 	// insert data into database
 	if ($valid) {
 	  $pdo = Database::connect();
 	  $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-	  $sql = "INSERT INTO customers (name,email,mobile) values(?, ?, ?)";
+	  $sql = "INSERT INTO customers (name,email,mobile, password) values(?, ?, ?, ?)";
 	  $q = $pdo->prepare($sql);
-	  $q->execute(array($name,$email,$mobile));
+	  $q->execute(array($name,$email,$mobile,$password));
 	  Database::disconnect();
 	  header('Location: prog01.php');
 	}
@@ -92,11 +102,21 @@
 			    <span class="help-inline"><?php echo $mobileError;?></span>
 			  <?php endif;?>
 			</div>
+		  </div>
+		  
+		  <div class="control-group <?php echo !empty($passwordError)?'error':'';?>">
+			<label class="control-label">Password</label>
+			<div class="controls">
+			  <input name="password" type="text"  placeholder="Password" value="<?php echo !empty($password)?$password:'';?>">
+			  <?php if (!empty($passwordError)): ?>
+			    <span class="help-inline"><?php echo $passwordError;?></span>
+			  <?php endif;?>
+			</div>
 		  </div><br />
 		  
 		  <div class="form-actions">
 			<button type="submit" class="btn btn-success">Create</button>
-			<a class="btn" href="prog01.php">Back</a>
+			<a class="btn" href="prog02.php">Back</a>
 		  </div>
 		</form>
 	  </div> <!-- end span -->		

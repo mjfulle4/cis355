@@ -1,6 +1,8 @@
 
 
-<?php 
+<?php
+  session_start();
+  if(empty ($_SESSION['name'])) header ("Location: login.php");
   require 'database.php';
   $id = 0;
 	
@@ -19,7 +21,7 @@
 	$q = $pdo->prepare($sql);
 	$q->execute(array($id));
 	Database::disconnect();
-	header("Location: prog01.php");	
+	header("Location: prog02.php");	
   } 
 ?>
 

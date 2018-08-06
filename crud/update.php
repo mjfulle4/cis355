@@ -3,6 +3,7 @@
 <?php 
 	
   session_start();
+  if(empty ($_SESSION['name'])) header ("Location: login.php");
   require 'database.php';
   
   $id = null;
@@ -10,7 +11,7 @@
 	$id = $_REQUEST['id'];
   }	
   if ( null==$id ) {
-    header("Location: prog01.php");
+    header("Location: prog02.php");
   }
 	
   if ( !empty($_POST)) {
@@ -117,7 +118,7 @@
 		
 		  <div class="form-actions">
 		    <button type="submit" class="btn btn-success">Update</button>
-		    <a class="btn" href="prog01.php">Back</a>
+		    <a class="btn" href="prog02.php">Back</a>
 		  </div>
 		</form>
 	  </div> <!-- end span -->		
