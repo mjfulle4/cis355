@@ -3,7 +3,7 @@
 // see HTML form (upload03.html) for overview of this program
 
 // include code for database access
-require 'database.php';
+require 'database1.php';
 
 // set PHP variables from data in HTML form 
 $fileDescription = $_POST['Description']; 
@@ -51,7 +51,7 @@ fclose($fp);
 if(!get_magic_quotes_gpc()) { $fileName = addslashes($fileName); }
 
 // connect to database
-$pdo = Database::connect();
+$pdo = database1::connect();
 
 // insert file info and content into table
 $sql = "INSERT INTO upload03 (filename, filesize, filetype, content) "
@@ -77,4 +77,4 @@ foreach ($pdo->query($sql) as $row) {
 echo '<br><br>';
 
 // disconnect
-Database::disconnect(); 
+database1::disconnect(); 
